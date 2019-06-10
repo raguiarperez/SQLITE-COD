@@ -16,62 +16,66 @@ import javax.swing.JOptionPane;
  * @author rafag
  */
 public class Modificar {
-    //Método para modificar el nombre y nota de una fila de la tabla rally,
-    //especificando el dorsal
 
     /**
+     * Método para modificar el piloto y vehiculo de una fila de la tabla rally,
+     * especificando el dorsal
      *
-     * @param nome
-     * @param nota
-     * @param referencia
+     * @param Piloto
+     * @param Vehiculo
+     * @param Dorsal
+     * @return modificación de Piloto y Vehiculo en fila de tabla Competidor
      */
     public static boolean modificarCompetidor(String Piloto, String Vehiculo, int Dorsal) {
-        boolean modCom=false;
+        boolean modCom = false;
         String sql = "UPDATE rally SET Piloto = ? , "
                 + "Vehiculo = ? "
                 + "WHERE Dorsal = ?";
         try (Connection conn = conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, Piloto);
             pstmt.setString(2, Vehiculo);
             pstmt.setInt(3, Dorsal);
             pstmt.executeUpdate();
-            modCom=true;
+            modCom = true;
             JOptionPane.showMessageDialog(null, "Competidor modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            modCom=false;
-        }return modCom;
+            modCom = false;
+        }
+        return modCom;
     }
-    
-    //Método para modificar el piloto, vehiculo y categoria de una fila de la tabla rally,
-    //especificando el id
 
     /**
+     * Método para modificar el piloto Categoria y vehiculo de una fila de la
+     * tabla rally, especificando el id de la Categoria
      *
      * @param Piloto
      * @param Vehiculo
      * @param Categoria
      * @param Dorsal
+     * @return modificación de Piloto, Vehiculo y Categoría en la tabla
+     * Competidor
+     *
      */
     public static boolean modificarCategoriaCompetidor(String Piloto, String Vehiculo, int Categoria, int Dorsal) {
-        boolean modCat=false;
+        boolean modCat = false;
         String sql = "UPDATE rally SET Piloto = ? , "
                 + "Vehiculo = ? , "
                 + "Categoria = ?"
                 + "WHERE Dorsal = ?";
         try (Connection conn = conectar();
-            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, Piloto);
             pstmt.setString(2, Vehiculo);
             pstmt.setInt(3, Categoria);
             pstmt.setInt(4, Dorsal);
             pstmt.executeUpdate();
-            modCat=true;
+            modCat = true;
             JOptionPane.showMessageDialog(null, "Competidor modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            modCat=false;
+            modCat = false;
         }
         return modCat;
     }

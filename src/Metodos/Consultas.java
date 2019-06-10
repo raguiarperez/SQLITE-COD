@@ -17,30 +17,28 @@ import java.util.ArrayList;
  * @author rafag
  */
 public class Consultas {
-      
-    //Método para buscar filas de la tabla rally,
-    //especificando cualquiera de sus campos
-    //Devuelve un ArrayList con todos los campos de las filas
 
     /**
+     * Método para buscar filas en la tabla rally, especificando cualquier
+     * campo.
      *
      * @param campo
      * @param valor
-     * @return
+     * @return Arraylist de todos los campos
      */
-    public static ArrayList<String> consultaRally(String campo, Object valor){
+    public static ArrayList<String> consultaRally(String campo, Object valor) {
         ArrayList<String> rally = new ArrayList<>();
         String sql = "SELECT Dorsal,Piloto,Vehiculo,Categoria"
-        + " FROM rally WHERE " + campo + "=?";
+                + " FROM rally WHERE " + campo + "=?";
         try (Connection conn = conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setObject(1, valor);
-            ResultSet rs  = pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                rally.add(rs.getInt("Dorsal") +  "," + 
-                                   rs.getString("Piloto") + "," +
-                                   rs.getString("Vehiculo") + "," +
-                                   rs.getInt("Categoria"));
+                rally.add(rs.getInt("Dorsal") + ","
+                        + rs.getString("Piloto") + ","
+                        + rs.getString("Vehiculo") + ","
+                        + rs.getInt("Categoria"));
             }
             return rally;
         } catch (SQLException e) {
@@ -49,21 +47,20 @@ public class Consultas {
             return rally;
         }
     }
-    
-    //Método que devuelve el nombre de la categoria, especificando el id
 
     /**
+     * Método que devuelve el nombre de la categoria, especificando el id
      *
      * @param id
-     * @return resultado
+     * @return Nombre de Categoria
      */
-    public static String obtenerNombreCategoria(int id){
+    public static String obtenerNombreCategoria(int id) {
         String sql = "SELECT nombre FROM Categoria where id = ?;";
         String resultado = "";
         try (Connection conn = conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            pstmt.setInt(1,id);
-            ResultSet rs  = pstmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 resultado = rs.getString("nombre");
             }
@@ -74,14 +71,20 @@ public class Consultas {
             return resultado;
         }
     }
-    
-    public static int obtenerIdCategoria(String nombre){
+
+    /**
+     * Método que devuelve el id de la categoria, especificando el nombre.
+     *
+     * @param nombre
+     * @return Id de Categoria
+     */
+    public static int obtenerIdCategoria(String nombre) {
         String sql = "SELECT id FROM Categoria where nombre = ?;";
         int resultado = 0;
         try (Connection conn = conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            pstmt.setString(1,nombre);
-            ResultSet rs  = pstmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombre);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
                 resultado = rs.getInt("id");
             }

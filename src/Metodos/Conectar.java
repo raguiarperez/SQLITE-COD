@@ -17,6 +17,12 @@ import java.sql.Statement;
  */
 public class Conectar {
     
+    
+    /**
+     * Método para conectarse a la Base de Datos
+     * @return Conexión a DB
+     */
+    
         public static Connection conectar() {
         String url = "jdbc:sqlite:Rally.db";
         Connection conn = null;
@@ -27,6 +33,14 @@ public class Conectar {
         }
         return conn;
     }
+        
+    /**
+     * Método para Conseguir la Tabla de la Base de datos mediante una Consulta.
+     * @param consulta
+     * @throws SQLException
+     * @return Conseguir Tablas de la DB
+     */
+        
         public static ResultSet getTabla(String consulta) throws SQLException{
         Connection conn=conectar();
         Statement st;

@@ -16,11 +16,11 @@ import java.sql.SQLException;
  */
 public class Borrar {
         
-    //Método para borrar una fila de la tabla rally, especificando el id
 
     /**
-     *
+     * Método para borrar una fila de la tabla rally, especificando el id
      * @param Dorsal
+     * @return Borrar fila Competición
      */
     public static boolean borrarCompetidor(int Dorsal){
         boolean brCom=false;

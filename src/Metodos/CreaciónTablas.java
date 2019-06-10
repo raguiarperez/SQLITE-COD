@@ -15,60 +15,57 @@ import java.sql.Statement;
  * @author rafag
  */
 public class CreaciónTablas {
-    
-        //Método de creación de la tabla Competición
 
     /**
-     * @param
+     * Método de creación de la tabla Competición
+     *
+     * @return Creación tabla Competición
      */
     public static boolean crearTablaCompetición() {
-        boolean ctr=false;
+        boolean ctr = false;
         String sql1 = "DROP TABLE IF EXISTS rally;\n";
         String sql2 = "CREATE TABLE IF NOT EXISTS rally (\n"
                 + "Dorsal integer PRIMARY KEY,\n"
                 + "Piloto text NOT NULL,\n"
                 + "Vehiculo text NOT NULL,\n"
                 + "Categoria integer,\n"
-                + "FOREIGN KEY (Categoria)\n" 
+                + "FOREIGN KEY (Categoria)\n"
                 + "REFERENCES Categoria(id)\n"
-                + ");";    
+                + ");";
         try (Connection conn = conectar();
-            Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
             stmt.execute(sql1);
             stmt.execute(sql2);
-            ctr=true;
+            ctr = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            ctr=false;
+            ctr = false;
         }
         return ctr;
     }
-    
-    
-    
-        //Método de creación de la tabla Categorias
 
     /**
+     * Método de creación de la tabla Categorias
      *
+     * @return Creación tabla Categorias
      */
     public static boolean crearTablaCategorias() {
-        boolean ctc=false;
+        boolean ctc = false;
         String sql1 = "DROP TABLE IF EXISTS Categoria;\n";
         String sql = "CREATE TABLE IF NOT EXISTS Categoria (\n"
                 + "id integer PRIMARY KEY,\n"
                 + "nombre text NOT NULL\n"
                 + ");";
         try (Connection conn = conectar();
-            Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
             stmt.execute(sql1);
             stmt.execute(sql);
-            ctc=true;
+            ctc = true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-            ctc=false;
+            ctc = false;
         }
         return ctc;
     }
-    
-    
+
 }

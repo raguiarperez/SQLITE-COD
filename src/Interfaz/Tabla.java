@@ -5,7 +5,6 @@
  */
 package Interfaz;
 
-
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -25,63 +24,57 @@ public class Tabla extends javax.swing.JFrame {
     /**
      * Creates new form Tabla
      */
-
-    
     ArrayList<Integer> ids = new ArrayList<>();
-    
-    
 
     /**
-     * En el constructor, me conecto con la base de datos, crear las tablas 
-     * rally y categoria, añadir filas a la tabla categoria y mostrar filas de 
+     * En el constructor, me conecto con la base de datos, crear las tablas
+     * rally y categoria, añadir filas a la tabla categoria y mostrar filas de
      * rally y categoria.
      */
-
-
     public Tabla() {
         initComponents();
         Conectar.conectar();
         CreaciónTablas.crearTablaCategorias();
         CreaciónTablas.crearTablaCompetición();
-        Insertar.insertarCompetidor(1,"Rafa Aguiar","Renault Clio",1);
-        Insertar.insertarCompetidor(2,"Edu Perez","Peugeot 206",2);
-        Insertar.insertarCompetidor(3,"Javi Otero","Suzuki Swift",1);
+        Insertar.insertarCompetidor(1, "Rafa Aguiar", "Renault Clio", 1);
+        Insertar.insertarCompetidor(2, "Edu Perez", "Peugeot 206", 2);
+        Insertar.insertarCompetidor(3, "Javi Otero", "Suzuki Swift", 1);
         Insertar.insertarCategorias();
     }
 
-    
-    //Método para vaciar las filas de una tabla del programa, no de la base de datos
-
+   
     /**
-     *
+     * Método para vaciar las filas de una tabla del programa, no de la base de datos
+     * 
      * @param tabla
+     * @return Vaciar Tablas
      */
-    public boolean borrarTabla(JTable tabla){
-        boolean brTab=false;
+    public boolean borrarTabla(JTable tabla) {
+        boolean brTab = false;
         try {
-            DefaultTableModel modelo=(DefaultTableModel) tabla.getModel();
-            int filas=tabla.getRowCount();
-            for (int i = 0;filas>i; i++) {
+            DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
+            int filas = tabla.getRowCount();
+            for (int i = 0; filas > i; i++) {
                 modelo.removeRow(0);
-                brTab=true;
+                brTab = true;
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Error al limpiar la tabla.");
-            brTab=false;
+            brTab = false;
         }
         return brTab;
     }
-    
-    //Método para insertar filas a la tabla rally desde el código
 
     /**
-     *
+     * Método para insertar filas a la tabla rally desde el código
+     * 
      * @param Dorsal
      * @param Piloto
      * @param Vehiculo
      * @param Categoria
+     * @return Inserción filas iniciales
      */
-    public final boolean insertarCompetidores(int Dorsal, String Piloto, String Vehiculo, int Categoria){
+    public final boolean insertarCompetidores(int Dorsal, String Piloto, String Vehiculo, int Categoria) {
         Insertar.insertarCompetidor(Dorsal, Piloto, Vehiculo, Categoria);
         String[] competidor = Devolver.devolverCompetidor(Dorsal).split(",");
         DefaultTableModel model = (DefaultTableModel) tablacomp.getModel();
@@ -350,13 +343,12 @@ public class Tabla extends javax.swing.JFrame {
     //Evento del botón Borrar, que elimina una fila de la tabla rally al seleccionarla
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         int fila = tablacomp.getSelectedRow();
-        if(fila == -1){
+        if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
-        }
-        else{
-            int Dorsal = Integer.parseInt(tablacomp.getValueAt(fila,0).toString());
-            for (int i=0;i<ids.size();i++){
-                if(ids.get(i)==Dorsal){
+        } else {
+            int Dorsal = Integer.parseInt(tablacomp.getValueAt(fila, 0).toString());
+            for (int i = 0; i < ids.size(); i++) {
+                if (ids.get(i) == Dorsal) {
                     ids.remove(i);
                 }
             }
@@ -372,21 +364,19 @@ public class Tabla extends javax.swing.JFrame {
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
         int filaA = tablacomp.getSelectedRow();
         int filaC = tablaCat.getSelectedRow();
-        if(filaA == -1){
+        if (filaA == -1) {
             JOptionPane.showMessageDialog(null, "No hay ninguna fila seleccionada");
-        }
-        else if (filaC == -1){
+        } else if (filaC == -1) {
             String Piloto = tNombreM.getText();
             String Vehiculo = tVehiculoM.getText();
-            int Dorsal = Integer.parseInt(tablacomp.getValueAt(filaA,0).toString());
+            int Dorsal = Integer.parseInt(tablacomp.getValueAt(filaA, 0).toString());
             Modificar.modificarCompetidor(Piloto, Vehiculo, Dorsal);
             bMostrarActionPerformed(evt);
-        }
-        else{
+        } else {
             String Piloto = tNombreM.getText();
             String Vehiculo = tVehiculoM.getText();
-            int Dorsal = Integer.parseInt(tablacomp.getValueAt(filaA,0).toString());
-            int Categoria = Integer.parseInt(tablaCat.getValueAt(filaC,0).toString());
+            int Dorsal = Integer.parseInt(tablacomp.getValueAt(filaA, 0).toString());
+            int Categoria = Integer.parseInt(tablaCat.getValueAt(filaC, 0).toString());
             Modificar.modificarCategoriaCompetidor(Piloto, Vehiculo, Categoria, Dorsal);
             bMostrarActionPerformed(evt);
         }
@@ -396,25 +386,25 @@ public class Tabla extends javax.swing.JFrame {
     //Usada para reiniciar la vista de la tabla después de las consultas
     private void bMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bMostrarActionPerformed
 
-      borrarTabla(tablacomp);
-       try {
-           DefaultTableModel modelo = new DefaultTableModel();
-           ResultSet rs = Conectar.getTabla("select * from rally");
-           modelo.setColumnIdentifiers(new Object[]{"Dorsal", "Piloto", "Vehiculo","Categoria"});
-           try {
-               while (rs.next()) {
-                   modelo.addRow(new Object[]{rs.getInt("Dorsal"), rs.getString("Piloto"),rs.getString("Vehiculo"), rs.getString("Categoria")});
-               }
-               tablacomp.setModel(modelo);
-           } catch (Exception e) {
-               System.out.println(e);
-           }} catch (Exception e) {
-           System.out.println(e);
-       }
-            
-           
+        borrarTabla(tablacomp);
+        try {
+            DefaultTableModel modelo = new DefaultTableModel();
+            ResultSet rs = Conectar.getTabla("select * from rally");
+            modelo.setColumnIdentifiers(new Object[]{"Dorsal", "Piloto", "Vehiculo", "Categoria"});
+            try {
+                while (rs.next()) {
+                    modelo.addRow(new Object[]{rs.getInt("Dorsal"), rs.getString("Piloto"), rs.getString("Vehiculo"), rs.getString("Categoria")});
+                }
+                tablacomp.setModel(modelo);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
         borrarTabla(tablaCat);
-        for(int i=1;i<5;i++){
+        for (int i = 1; i < 5; i++) {
             String[] categoria = Devolver.devolverCategoria(i).split(",");
             DefaultTableModel model = (DefaultTableModel) tablaCat.getModel();
             model.addRow(new Object[]{categoria[0], categoria[1]});
@@ -427,21 +417,26 @@ public class Tabla extends javax.swing.JFrame {
         borrarTabla(tablacomp);
         String opcion = cbConsulta.getSelectedItem().toString();
         Object buscar = tConsulta.getText();
-        switch (opcion){
-            case "Dorsal": opcion="Dorsal";
-            break;
-            case "Piloto": opcion="Piloto";
-            break;
-            case "Vehiculo": opcion="Vehiculo";
-            break;
-            case "Categoria": opcion="Categoria";
-            buscar = Consultas.obtenerIdCategoria((String) buscar);
-            break;
-            default: opcion="Piloto";
-            break;
+        switch (opcion) {
+            case "Dorsal":
+                opcion = "Dorsal";
+                break;
+            case "Piloto":
+                opcion = "Piloto";
+                break;
+            case "Vehiculo":
+                opcion = "Vehiculo";
+                break;
+            case "Categoria":
+                opcion = "Categoria";
+                buscar = Consultas.obtenerIdCategoria((String) buscar);
+                break;
+            default:
+                opcion = "Piloto";
+                break;
         }
         ArrayList<String> competidor = Consultas.consultaRally(opcion, buscar);
-        for(int i=0; i<competidor.size(); i++){
+        for (int i = 0; i < competidor.size(); i++) {
             int id = Integer.parseInt(competidor.get(i).split(",")[0]);
             String[] competidores = Devolver.devolverCompetidor(id).split(",");
             DefaultTableModel model = (DefaultTableModel) tablacomp.getModel();
@@ -458,23 +453,23 @@ public class Tabla extends javax.swing.JFrame {
         Dorsal = Integer.parseInt(tID.getText());
         Piloto = tNombre.getText();
         Vehiculo = tVehiculo.getText();
-        for (Integer i : ids){
-            if(Dorsal == i){
+        for (Integer i : ids) {
+            if (Dorsal == i) {
                 JOptionPane.showMessageDialog(null, "El Dorsal ya existe");
                 return;
             }
         }
-        if(fila == -1){
+        if (fila == -1) {
             JOptionPane.showMessageDialog(null, "No se ha seleccionado una Categoria");
-        } else{
-            Categoria = Integer.parseInt(tablaCat.getValueAt(fila,0).toString());
+        } else {
+            Categoria = Integer.parseInt(tablaCat.getValueAt(fila, 0).toString());
             Insertar.insertarCompetidor(Dorsal, Piloto, Vehiculo, Categoria);
             String[] competidor = Devolver.devolverCompetidor(Dorsal).split(",");
             DefaultTableModel model = (DefaultTableModel) tablacomp.getModel();
             model.addRow(new Object[]{competidor[0], competidor[1], competidor[2], Consultas.obtenerNombreCategoria(Integer.parseInt(competidor[3]))});
             ids.add(Dorsal);
         }
-        
+
     }//GEN-LAST:event_bAñadirActionPerformed
 
     /**

@@ -16,28 +16,27 @@ import java.sql.SQLException;
  * @author rafag
  */
 public class Devolver {
-    
-    //Método que devuelve un String con todos los campos de una fila,
-    //especificando el id
 
     /**
+     * Método que devuelve un String con todos los campos de una fila,
+     * especificando el Dorsal
      *
-     * @param id
-     * @return resultado
+     * @param Dorsal
+     * @return Todos los campos de Competidor
      */
-    public static String devolverCompetidor(int Dorsal){
+    public static String devolverCompetidor(int Dorsal) {
         String sql = "SELECT Dorsal,Piloto,Vehiculo,Categoria"
-        + " FROM rally WHERE Dorsal=?";
+                + " FROM rally WHERE Dorsal=?";
         String resultado = "";
         try (Connection conn = conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            pstmt.setInt(1,Dorsal);
-            ResultSet rs  = pstmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, Dorsal);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                resultado = (rs.getInt("Dorsal") +  "," + 
-                                   rs.getString("Piloto") + "," +
-                                   rs.getString("Vehiculo") + "," +
-                                   rs.getInt("Categoria"));
+                resultado = (rs.getInt("Dorsal") + ","
+                        + rs.getString("Piloto") + ","
+                        + rs.getString("Vehiculo") + ","
+                        + rs.getInt("Categoria"));
             }
             return resultado;
         } catch (SQLException e) {
@@ -46,28 +45,25 @@ public class Devolver {
             return resultado;
         }
     }
-    
-    
-    
-    //Método que devuelve un String con todos los campos de una fila,
-    //especificando el id
 
     /**
+     * Método que devuelve un String con todos los campos de una fila,
+     * especificando el id
      *
      * @param id
-     * @return resultado
+     * @return Todos los campos de Categoria
      */
-    public static String devolverCategoria(int id){
+    public static String devolverCategoria(int id) {
         String sql = "SELECT id,nombre"
-        + " FROM Categoria WHERE id=?";
+                + " FROM Categoria WHERE id=?";
         String resultado = "";
         try (Connection conn = conectar();
-            PreparedStatement pstmt  = conn.prepareStatement(sql)){
-            pstmt.setInt(1,id);
-            ResultSet rs  = pstmt.executeQuery();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, id);
+            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                resultado = (rs.getInt("id") +  "," + 
-                                   rs.getString("nombre"));
+                resultado = (rs.getInt("id") + ","
+                        + rs.getString("nombre"));
             }
             return resultado;
         } catch (SQLException e) {
