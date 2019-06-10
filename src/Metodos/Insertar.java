@@ -44,7 +44,8 @@ public class Insertar {
         }
         return insC; 
     }
-        public static void insertarCategorias() {
+        public static boolean insertarCategorias() {
+            boolean insCat=false;
         String sql1 = "INSERT INTO Categoria VALUES(1,'N5');";
         String sql2 = "INSERT INTO Categoria VALUES(2,'R5');";
         String sql3 = "INSERT INTO Categoria VALUES(3,'GRUPO B');";
@@ -55,9 +56,11 @@ public class Insertar {
             stmt.execute(sql2);
             stmt.execute(sql3);
             stmt.execute(sql4);
+            insCat=true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
+            insCat=false;
+        }return insCat;
     }
 
     

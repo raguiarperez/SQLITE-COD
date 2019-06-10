@@ -22,15 +22,18 @@ public class Borrar {
      *
      * @param Dorsal
      */
-    public static void borrarCompetidor(int Dorsal){
+    public static boolean borrarCompetidor(int Dorsal){
+        boolean brCom=false;
         String sql = "DELETE FROM rally WHERE Dorsal=?";
         try (Connection conn = conectar();
             PreparedStatement pstmt  = conn.prepareStatement(sql)){
             pstmt.setInt(1, Dorsal);
             pstmt.executeUpdate();
+            brCom=true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
+            brCom=false;
+        }return brCom;
     }
     
 }

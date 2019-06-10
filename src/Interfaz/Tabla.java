@@ -29,11 +29,12 @@ public class Tabla extends javax.swing.JFrame {
     
     ArrayList<Integer> ids = new ArrayList<>();
     
-    //En el constructor, me conecto con la base de datos, crear las tablas rally
-    //y categoria, añadir filas a la tabla categoria y mostrar filas de rally y categoria
+    
 
     /**
-     *
+     * En el constructor, me conecto con la base de datos, crear las tablas 
+     * rally y categoria, añadir filas a la tabla categoria y mostrar filas de 
+     * rally y categoria.
      */
 
 
@@ -80,12 +81,13 @@ public class Tabla extends javax.swing.JFrame {
      * @param Vehiculo
      * @param Categoria
      */
-    public final void insertarCompetidores(int Dorsal, String Piloto, String Vehiculo, int Categoria){
+    public final boolean insertarCompetidores(int Dorsal, String Piloto, String Vehiculo, int Categoria){
         Insertar.insertarCompetidor(Dorsal, Piloto, Vehiculo, Categoria);
         String[] competidor = Devolver.devolverCompetidor(Dorsal).split(",");
         DefaultTableModel model = (DefaultTableModel) tablacomp.getModel();
         model.addRow(new Object[]{competidor[0], competidor[1], competidor[2], Consultas.obtenerNombreCategoria(Integer.parseInt(competidor[3]))});
         ids.add(Dorsal);
+        return true;
     }
 
     /**

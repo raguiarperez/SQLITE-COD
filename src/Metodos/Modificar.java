@@ -25,7 +25,8 @@ public class Modificar {
      * @param nota
      * @param referencia
      */
-    public static void modificarCompetidor(String Piloto, String Vehiculo, int Dorsal) {
+    public static boolean modificarCompetidor(String Piloto, String Vehiculo, int Dorsal) {
+        boolean modCom=false;
         String sql = "UPDATE rally SET Piloto = ? , "
                 + "Vehiculo = ? "
                 + "WHERE Dorsal = ?";
@@ -35,10 +36,12 @@ public class Modificar {
             pstmt.setString(2, Vehiculo);
             pstmt.setInt(3, Dorsal);
             pstmt.executeUpdate();
+            modCom=true;
             JOptionPane.showMessageDialog(null, "Competidor modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
-        }
+            modCom=false;
+        }return modCom;
     }
     
     //Método para modificar el piloto, vehiculo y categoria de una fila de la tabla rally,
@@ -51,7 +54,8 @@ public class Modificar {
      * @param Categoria
      * @param Dorsal
      */
-    public static void modificarCategoriaCompetidor(String Piloto, String Vehiculo, int Categoria, int Dorsal) {
+    public static boolean modificarCategoriaCompetidor(String Piloto, String Vehiculo, int Categoria, int Dorsal) {
+        boolean modCat=false;
         String sql = "UPDATE rally SET Piloto = ? , "
                 + "Vehiculo = ? , "
                 + "Categoria = ?"
@@ -63,9 +67,12 @@ public class Modificar {
             pstmt.setInt(3, Categoria);
             pstmt.setInt(4, Dorsal);
             pstmt.executeUpdate();
+            modCat=true;
             JOptionPane.showMessageDialog(null, "Competidor modificado correctamente");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+            modCat=false;
         }
+        return modCat;
     }
 }
