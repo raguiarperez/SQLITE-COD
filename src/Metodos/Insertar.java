@@ -9,6 +9,7 @@ import static Metodos.Conectar.conectar;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.JOptionPane;
 
 /**
@@ -42,6 +43,21 @@ public class Insertar {
             insC=false;
         }
         return insC; 
+    }
+        public static void insertarCategorias() {
+        String sql1 = "INSERT INTO Categoria VALUES(1,'N5');";
+        String sql2 = "INSERT INTO Categoria VALUES(2,'R5');";
+        String sql3 = "INSERT INTO Categoria VALUES(3,'GRUPO B');";
+        String sql4 = "INSERT INTO Categoria VALUES(4,'WRC');";
+        try (Connection conn = conectar();
+            Statement stmt = conn.createStatement()) {
+            stmt.execute(sql1);
+            stmt.execute(sql2);
+            stmt.execute(sql3);
+            stmt.execute(sql4);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     
